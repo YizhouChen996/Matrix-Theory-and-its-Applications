@@ -1,0 +1,214 @@
+\documentclass{article}
+\usepackage{blindtext}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,bm}
+\usepackage{amstext}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{enumerate}
+\usepackage{xeCJK}
+\setCJKmainfont{STKaiti}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\renewcommand{\algorithmicrequire}{ \textbf{输入:}} %Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{ \textbf{输出:}} %UseOutput in the format of Algorithm
+\usepackage{graphicx}
+
+\title{矩阵论及其应用\\习题1}
+\author{陈轶洲 MF20330010}
+\begin{document}
+	\maketitle
+	\numberwithin{equation}{section}
+	
+\section{}
+首先证明充分性：\\
+利用反证法，设$V_1\cap V_2= \{0\}$，若$z\in V_1+V_2$不能唯一地表示成$ V_1 $和$V_2$的向量的和，则必有$ x_1,x_2\in V_1 \quad  y_1,y_2\in V_2 $，且$x_1\neq x_2 \quad y_1\neq y_2$，使得
+\begin{equation}
+	z=x_1+y_1 \qquad z=x_2+y_2
+\end{equation}
+两式相减得到$ (x_1-x_2)+(y_1-y_2)=0 $，令$ w=x_1-x_2=-(y_1-y_2)\neq 0 $，而$ (x_1-x_2)\in V_1,-(y_1-y_2)\in V_2 $，故$ w\in {V_1\cap V_2} $，进而得到$  {V_1\cap V_2}\neq \{0\}$，与假设矛盾，充分性可证；\\
+接着证明必要性：\\
+再次利用反证法，假设$  {V_1\cap V_2}\neq \{0\}$，则$ \exists w \in V_1\cap V_2 $且$ w\neq 0 $。\\
+由$ w\in V_1,w\in V_2 $可得
+\begin{equation}
+	\begin{aligned}
+w+w=2w\in V_1,w+w=2w\in V_2 \\
+2w+w=3w\in V_1,2w+w=3w\in V_2 \\
+	\end{aligned}
+\end{equation}
+由上可知$4w=2w+2w=3w+w\in V_1+V_2$且$2\neq 3,2\neq 1$，所以其向量分解是不唯一的，从而得到$V_1+V_2$不是$ V_1,V_2 $的直接和空间，与假设矛盾，必要性可证
+
+
+\section{}
+设$\varepsilon_1=x^{2}+x,\varepsilon_2=x^{2}-x,\varepsilon_3=x+1$，假设这三个向量线性相关，则必存在一组不全为0的实数$ a,b,c $使得
+\begin{equation}
+	a\varepsilon_1+b\varepsilon_2+c\varepsilon_3=(a+b)x^2+(a-b+c)x+c=0
+\end{equation}
+从而可以推出
+\begin{equation}
+	\left\{
+	\begin{aligned}
+		&a+b=0\\
+		&a-b+c=0\\
+		&c=0
+	\end{aligned} 
+	\right.
+\end{equation}
+解得
+\begin{equation}
+a=b=c=0
+\end{equation}
+故$\varepsilon_1,\varepsilon_2,\varepsilon_3  $线性无关，又有$ dim(p_2(x))=3 $，故$\varepsilon_1,\varepsilon_2,\varepsilon_3  $是线性空间$ p_2(x) $的一组基。再令
+\begin{equation}
+	\begin{aligned}
+	2x^2+7x+3&=\alpha_1\varepsilon_1 + \alpha_2\varepsilon_2+\alpha_3\varepsilon_3\\
+	&=(\alpha_1+\alpha_2)x^2+(\alpha_1-\alpha_2+\alpha_3)x+\alpha_3
+	\end{aligned}
+\end{equation}
+于是有
+\begin{equation}
+	\left\{
+	\begin{aligned}
+		&\alpha_1+\alpha_2=2\\
+		&\alpha_1-\alpha_2+\alpha_3=7\\
+		&\alpha_3=3
+	\end{aligned} 
+	\right.
+\end{equation}
+解得
+\begin{equation}
+	\left\{
+	\begin{aligned}
+		&\alpha_1=3\\
+		&\alpha_2=-1\\
+		&\alpha_3=3
+	\end{aligned} 
+	\right.
+\end{equation}
+故其坐标为$ (3,-1,3) ^{T}$
+
+
+\section{
+}
+设$ k_1\beta_1+k_2\beta_2+k_3\beta_3=0 $，即$ k_1(\alpha_1-2\alpha_2+3\alpha_3)+k_2(2\alpha_1+3\alpha_2+2\alpha_3)+k_3(4\alpha_1+13\alpha_2)=(k_1+2k_2+4k_3)\alpha_1+(-2k_1+3k_2+13k_3)\alpha_2+(3k_1+2k_2)\alpha_3=0  $\\
+由于$ \alpha_1,\alpha_2,\alpha_3 $是一组基底，故其线性无关，从而可得
+\begin{equation}
+		\left\{
+	\begin{aligned}
+		&k_1+2k_2+4k_3=0\\
+		&-2k_1+3k_2+13k_3=0\\
+		&3k_1+2k_2=0
+	\end{aligned} 
+	\right.
+\end{equation}
+解得
+\begin{equation}
+	\left\{
+	\begin{aligned}
+		&k_1=2k_3\\
+		&k_2=-3k_3\\
+		&k_3=k_3
+	\end{aligned} 
+	\right.
+\end{equation}
+故$ 2\beta_1-3\beta_2+\beta_3=0 $，$  \beta_1,\beta_2,\beta_3$线性相关。又显见$ \beta_1 $与$ \beta_2 $（或$ \beta_1 $与$ \beta_3 $，$ \beta_2 $与$ \beta_3 $）线性无关，故$ dim(Span(\beta_1,\beta_2,\beta_3))=2 $，基底由$ \beta_1 $与$ \beta_2 $（或$ \beta_1 $与$ \beta_3 $，$ \beta_2 $与$ \beta_3 $）组成
+
+
+
+
+\section{}
+由于
+\begin{equation}
+	(e_3,e_2,e_1)=(e_1,e_2,e_3)\begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & 0\\ 1 & 0 & 0 \end{bmatrix}=(e_1,e_2,e_3)B
+\end{equation}
+而
+\begin{equation}
+	T(e_1,e_2,e_3)=(e_1,e_2,e_3)A
+\end{equation}
+故
+\begin{equation}
+	\begin{aligned}
+	T(e_3,e_2,e_1)&=T(e_1,e_2,e_3)B\\
+	&=(e_1,e_2,e_3)AB\\
+	&=(e_3,e_2,e_1)B^{-1}AB\\
+	&=(e_3,e_2,e_1)\begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & 0\\ 1 & 0 & 0 \end{bmatrix}A\begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & 0\\ 1 & 0 & 0 \end{bmatrix}\\
+	&=(e_3,e_2,e_1)\begin{bmatrix} a_{33} & a_{32} & a_{31} \\ a_{23} & a_{22} & a_{21}\\ a_{13} & a_{12} & a_{11} \end{bmatrix}
+	\end{aligned}
+\end{equation}
+
+\section{}
+设$ x=(x_1,x_2,x_3)^{T},y=(y_1,y_2,y_3)^{T},\quad\lambda,\mu\in F $\\
+对于$ T_1 $：
+\begin{equation}
+	\begin{aligned}
+		T_1(\lambda x+\mu y)=\begin{bmatrix} \lambda x_1+\mu y_1+\lambda x_2+\mu y_2 \\ (\lambda x_1+\mu y_1)^2-(\lambda x_2+\mu y_2 )^2\end{bmatrix}
+	\end{aligned}
+\end{equation}
+\begin{equation}
+	\begin{aligned}
+		\lambda  T_1(x)+\mu T_1(y)&=\begin{bmatrix} \lambda x_1+\mu y_1+\lambda x_2+\mu y_2 \\ \lambda x_1^2+\mu y_1^2-(\lambda x_2^2+\mu y_2^2 )\end{bmatrix}\\
+		&\neq T_1(\lambda x+\mu y)
+	\end{aligned}
+\end{equation}
+故$T_1:R^3\to R^2  $不是线性映射\\
+对于$ T_2 $：
+\begin{equation}
+	\begin{aligned}
+		T_2(\lambda x+\mu y)=\begin{bmatrix} \lambda x_1+\mu y_1-(\lambda x_2+\mu y_2) \\ \lambda x_2+\mu y_2+(\lambda x_3+\mu y_3)\end{bmatrix}
+	\end{aligned}
+\end{equation}
+\begin{equation}
+	\begin{aligned}
+			\lambda  T_2(x)+\mu T_2(y)&=\begin{bmatrix} \lambda x_1+\mu y_1-(\lambda x_2+\mu y_2) \\ \lambda x_2+\mu y_2+(\lambda x_3+\mu y_3)\end{bmatrix}\\
+		&= T_2(\lambda x+\mu y)
+	\end{aligned}
+\end{equation}
+故$T_2:R^3\to R^2  $是线性映射
+
+\section{}
+(1)
+设
+\begin{equation}
+	X=\begin{bmatrix} x_1 & x_2\\x_3 & x_4\end{bmatrix},Y=\begin{bmatrix} y_1 & y_2\\y_3 &y_4\end{bmatrix}\in R^{2\times 2}
+\end{equation}
+对$ \forall \lambda,\mu \in F $，有
+\begin{equation}
+	\begin{aligned}
+	T(\lambda X+\mu Y)&=\begin{bmatrix} (\lambda x_1+\mu y_1)+(\lambda x_3+\mu y_3)&  (\lambda x_2+\mu y_2)+(\lambda x_4+\mu y_4)\\2(\lambda x_1+\mu y_1)+2(\lambda x_3+\mu y_3) &2(\lambda x_2+\mu y_2)+2(\lambda x_4+\mu y_4)\end{bmatrix}\\
+	&=\begin{bmatrix} \lambda x_1+\lambda x_3&  \lambda x_2+\lambda x_4\\2\lambda x_1+2\lambda x_3 &2\lambda x_2+2\lambda x_4\end{bmatrix}+\begin{bmatrix} \mu y_1+\mu y_3&  \mu y_2+\mu y_4\\2\mu y_1+2\mu y_3 &2\mu y_2+2\mu y_4\end{bmatrix}\\
+	&=\lambda\begin{bmatrix} x_1+ x_3&   x_2+ x_4\\2 x_1+2 x_3 &2 x_2+2x_4\end{bmatrix}+\mu\begin{bmatrix}  y_1+ y_3&   y_2+ y_4\\2 y_1+2 y_3 &2 y_2+2 y_4\end{bmatrix}\\
+	&=\lambda T(X)+\mu T(Y)
+	\end{aligned}
+\end{equation}
+故$ T $是$  R^{2\times 2}$上的线性变换\\
+(2)
+\begin{equation}
+	\begin{aligned}
+		T(E_1)&=\begin{bmatrix}1 & 0\\2 & 0\end{bmatrix}=E_1-2E_3+2E_4\\
+		T(E_2)&=\begin{bmatrix}1 & 1\\2 & 2\end{bmatrix}=-E_2+2E_4\\
+		T(E_3)&=\begin{bmatrix}1 & 2\\2 & 4\end{bmatrix}=-E_1-2E_2+2E_3+2E_4\\
+		T(E_4)&=\begin{bmatrix}2 & 2\\4 & 4\end{bmatrix}=-2E_2+4E_4\\
+	\end{aligned}
+\end{equation}
+故
+$ T(E_1,E_2,E_3,E_4)=(E_1,E_2,E_3,E_4)\begin{bmatrix}1 & 0 & -1 & 0\\0 & -1 & -2 & -2\\ -2 & 0 & 2 & 0\\ 2 & 2 & 2 & 4\end{bmatrix} $
+
+\section{}
+(1)\\
+$\begin{vmatrix}B,AB,A^2B
+\end{vmatrix}=\begin{vmatrix}0& 1 & 0\\1& -0.9& 0.81\\1 & 0.5 & 0.25
+\end{vmatrix}=0.56\neq 0$\\
+故方阵$ \begin{bmatrix}B,AB,A^2B
+\end{bmatrix} $满秩， $ rank(\begin{bmatrix}B,AB,A^2B
+\end{bmatrix})=3 $，矩阵对$ (A,B) $可控\\
+(2)\\
+$\begin{vmatrix}B,AB,A^2B
+\end{vmatrix}=\begin{vmatrix}1& 0.5 & 0.19\\1& 0.7& 0.45\\0 & 0 & 0
+\end{vmatrix}=0$\\
+故$ \begin{matrix}B,AB,A^2B
+\end{matrix} $这三个向量线性相关， $ rank(\begin{bmatrix}B,AB,A^2B
+\end{bmatrix})=2 $，矩阵对$ (A,B) $不可控
+
+
+\end{document}
