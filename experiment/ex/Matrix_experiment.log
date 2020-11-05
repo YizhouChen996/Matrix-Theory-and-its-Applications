@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.11.23)  31 OCT 2020 14:14
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018) (preloaded format=xelatex 2018.11.23)  5 NOV 2020 20:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1055,32 +1055,37 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 ] [2]
 
 LaTeX Font Warning: Font shape `TU/STKaiti(0)/m/it' undefined
-(Font)              using `TU/STKaiti(0)/m/n' instead on input line 95.
+(Font)              using `TU/STKaiti(0)/m/n' instead on input line 96.
 
 
-Overfull \hbox (15.00366pt too wide) in paragraph at lines 98--99
+Overfull \hbox (15.00366pt too wide) in paragraph at lines 99--100
 [][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (63.00415pt too wide) in paragraph at lines 103--104
+Overfull \hbox (63.00415pt too wide) in paragraph at lines 104--105
 [][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (9.0036pt too wide) in paragraph at lines 104--105
+Overfull \hbox (9.0036pt too wide) in paragraph at lines 105--106
 [][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (117.0047pt too wide) in paragraph at lines 107--108
+Overfull \hbox (183.00537pt too wide) in paragraph at lines 107--108
+[][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (117.0047pt too wide) in paragraph at lines 108--109
 [][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 File: output.png Graphic file (type bmp)
 <output.png>
 
-Overfull \hbox (131.92609pt too wide) in paragraph at lines 135--136
+Overfull \hbox (131.92609pt too wide) in paragraph at lines 136--137
  [][] 
  []
 
@@ -1092,7 +1097,7 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Here is how much of TeX's memory you used:
  15658 strings out of 492970
  335685 string characters out of 6133937
- 474930 words of memory out of 5000000
+ 475930 words of memory out of 5000000
  19536 multiletter control sequences out of 15000+600000
  542270 words of font info for 82 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191

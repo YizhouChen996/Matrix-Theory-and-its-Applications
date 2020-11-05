@@ -68,6 +68,7 @@
 			\State $ \Omega_k = \Omega_{k-1}\cup \{j_k\} $
 			\State $ x_k = (A_{\Omega_k}^{T}A_{\Omega_k})^{-1}A_{\Omega_k}^{T}y $
 			\State $ r_k = y-A_{\Omega_k}x_k $
+			\State $ k += 1 $
 			\EndWhile
 			\State $  \hat{x}(i) = \left\{
 			\begin{aligned}
@@ -103,7 +104,7 @@ function [ x ] = Mallat(y,A,K)
 		[val, pos] = max(abs(product));%找到与残差最相关的列
 		At(:,ii) = A(:,pos);%将被选中的列存储到At中
 		x_pos(ii) = pos;%记录被选中列的序号
-		A(:,pos) = zeros(M,1);
+		A(:,pos) = zeros(M,1);%清零A的这一列，其实此行可以不要，因为它与残差正交
 		x_l = (At(:,1:ii)'*At(:,1:ii))^(-1)*At(:,1:ii)'*y;%最小二乘解
 		r = y - At(:,1:ii)*x_l;%更新残差
 	end
