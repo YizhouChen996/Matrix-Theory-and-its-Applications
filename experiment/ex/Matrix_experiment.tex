@@ -35,19 +35,21 @@
 	
 \section{实验环境}
 
-计算机型号：MacBook Air (13-inch, Early 2015)\\
+计算机型号：MacBook Air \\
 操作系统：Mac os\\
 编程语言：Matlab
 	
 	
 \section{CPU时间}
-输入第一组数据：
+输入第一组数据：$ K=8,M=50,N=100 $\\
+由于数据规模不大，所以该算法消耗的CPU时间只有几毫秒\\
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.6]{test1.png}
 \end{figure}
 
-输入第二组数据：
+输入第二组数据：$ K=1000,M=15000,N=23000 $\\
+第二组数据规模远远超过第一组，耗时332.012s
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.6]{test2.png}
@@ -56,7 +58,7 @@
 \section{算法说明}
 \subsection{算法步骤}
 	\begin{algorithm}[H]
-		\caption{正交匹配追踪算法} 
+		\caption{正交匹配追踪算法$ Mallat(y,A,K) $} 
 		\hspace*{0.02in} {\bf Input:} 
 		观测数据向量$ y\in R^{M\times 1},$ 字典矩阵 $ A \in R^{M\times N},$ 稀疏性指标 $K\in N$\\
 		\hspace*{0.02in} {\bf Output:} 
@@ -82,12 +84,13 @@
 \subsection{变量说明}
 使用Matlab设计的正交匹配追踪算法中，对变量做如下定义：\\
 1.A为测度矩阵，规模为$ M\times N $；\\
-2.y为观测所得向量，规模为$ M\times 1 $；\\
-3.K为稀疏性指标，为正整数；\\
-4.x为待还原向量，规模为$ N\times 1 $；\\
+2.x为待重构向量，规模为$ N\times 1 $；\\
+3.y为观测所得向量，规模为$ M\times 1 $；\\
+4.K为稀疏性指标，为正整数；\\
 5.r为残差向量，规模为$ M\times 1 $；\\
-6.At，每轮迭代时被选中的列\\
-7.$ x_l $为最小二乘解
+6.At，每轮迭代时被选中的列；\\
+7.$ x_l $为最小二乘解；\\
+8.$ x_r $为经过算法重构的向量。
 
 \subsection{程序清单}
 首先在Mallat.m中实现正交匹配追踪算法：
@@ -104,7 +107,7 @@ function [ x ] = Mallat(y,A,K)
 		[val, pos] = max(abs(product));%找到与残差最相关的列
 		At(:,ii) = A(:,pos);%将被选中的列存储到At中
 		x_pos(ii) = pos;%记录被选中列的序号
-		A(:,pos) = zeros(M,1);%清零A的这一列，其实此行可以不要，因为它与残差正交
+		A(:,pos) = zeros(M,1);
 		x_l = (At(:,1:ii)'*At(:,1:ii))^(-1)*At(:,1:ii)'*y;%最小二乘解
 		r = y - At(:,1:ii)*x_l;%更新残差
 	end
@@ -118,26 +121,92 @@ end
 	M=50;
 	N=100;
 	A=randn(M,N);
-	y=randn(M,1);
-	x1 = Mallat(y,A,K);
+	x=randn(N,1);
+	kk=randperm(N);
+	x(kk(1:N-K))=0;
+	y=A*x;
+	x_r1 = Mallat(y,A,K);
+	stem([x,x_r1]);
 	
 	K=1000;
 	M=15000;
 	N=23000;
 	A=randn(M,N);
-	y=randn(M,1);
-	x2 = Mallat(y,A,K);
+	x=randn(N,1);
+	kk=randperm(N);
+	x(kk(1:N-K))=0;
+	y=A*x;
+	x_r2 = Mallat(y,A,K);
+	stem([x,x_r2]);
 \end{lstlisting}
 
 \section{运行结果及分析}
-第一组数据的解向量：
-\begin{figure}[h]
+\subsection{$ K=8,M=50,N=100 $}
+以第一组数据为例，当$ M=50,N=100 $时，取稀疏性系数$ K=8 $，通过随机生成的系数向量$ x $生成观测所得向量，并通过正交匹配追踪算法得到重构向量$ x_r $，其输出如下：\\
+$ x $：\\
+\begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.6]{output.png}
+	\includegraphics[scale=0.6]{x.png}
+\end{figure}
+$ x_r $：
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{x_r.png}
 \end{figure}
 
-从结果可以看出，使用正交匹配追踪算法可以有效恢复信号，并通过稀疏性指标控制向量的稀疏性
+通过matlab自带的绘图函数stem（）绘制两个向量的针状图
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{k8.png}
+\end{figure}
+结合输出向量和图表可知重构向量与原始向量相同，在该条件下正交匹配追踪算法能根据观测向量完美重构向量
+
+\subsection{$ K=12,M=50,N=100 $}
+仍使用第一组数据，将稀疏性系数$ K $增大到12，由图可知重构向量与原向量几乎没有误差
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{k12.png}
+\end{figure}
+
+\subsection{$ K=16,M=50,N=100 $}
+将稀疏性系数$ K $继续增大到16，由图可知此时重构向量与原向量之间出现误差
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{k16.png}
+\end{figure}
+
+\subsection{$ K=24,M=50,N=100 $}
+当稀疏性系数$ K $继续增大到24后，重构向量与原向量之间的误差进一步增大
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{k24.png}
+\end{figure}
+
+\subsection{$ K=1000,M=15000,N=23000 $}
+考虑第二组数据，由图可知重构向量与原向量几乎没有误差
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.6]{k1000.png}
+\end{figure}
+
+\subsection{结果分析}
+\begin{enumerate}[1)]
+	\item 对于两组输入数据，分析其CPU运行时间,可以发现：对于小规模输入,正交匹配追踪算法可以在几毫秒内求出结果;而对稍大规模数据,该算法的求解效率依然很可观；
+	\item 根据第一组实验，在确定M和N后，K的取值决定了最后重构向量的表现：$ K<<N $时重构向量与原向量几乎无误差，而随着K的增大，重构向量与原向量之间的误差也越来越大，根据文献$ [1] $可以看出信号稀疏度K与重构成功概率之间的关系：
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.6]{1.png}
+	\end{figure}
+\end{enumerate}
+
 \section{实验总结}
-通过本次实验，让我对信号处理有了初步的了解，其中所涉及的矩阵论知识也强化了我对矩阵的特性以及矩阵运算有了进一步的认识。
+\begin{enumerate}[1)]
+	\item 通过计算程序运行CPU时间可以发现，正交匹配追踪算法的时间复杂度并不高，这是由于它本质上是一个贪心算法，通过稀疏性系数K来决定迭代次数，这样就避免了对整个系数矩阵进行求逆等耗时的操作；
+	\item 在进行算法设计过程中，我考虑利用残差向量寻找到A中与其内积绝对值最大的列后，将该列置为零。后来发现这一步是不必要的，因为在之后的轮次中，残差向量与该列正交，所以不会出现重复选择某一列的情况；
+	\item 对于“增大稀疏性系数K后误差变大”这一现象，我认为可以类比主成分分析（principal component analysis, PCA），正交匹配算法每轮选择与残差向量内积绝对值最大的列，可以认为这些列最大程度地保留了向量的信息，而随着K的增大，所选择的列越多，这样势必会加入一些与向量相关性不大的列，从而给信号带来噪声，使得重构误差增加。	
+\end{enumerate}
+
+\section{参考文献}
+	$ [1] $ Joel A. Tropp and Anna C. Gilbert. Signal Recovery From Random Measurements Via Orthogonal Matching Pursuit[J]. IEEETransactions on Information Theory, VOL. 53, NO. 12, DECEMBER 2007.
 
 \end{document}
